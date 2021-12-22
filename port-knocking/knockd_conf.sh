@@ -1,41 +1,47 @@
 #!/bin/bash
 
+function install_iptables_addons() {
+
+  if [ -e /usr/sbin/accept_forward ]
+  then
+    return
+  fi
+
+  SCRIPT=`realpath $0`
+  SCRIPT_PATH=`dirname $SCRIPT`
+
+  cp $SCRIPT_PATH/accept_forward /usr/sbin/accept_forward
+  cp $SCRIPT_PATH/accept_forward /usr/sbin/delete_forward
+  chmod +x /usr/sbin/accept_forward
+  chmod +x /usr/sbin/delete_forward
+}
+
 function add_forward_knock() {
 
-  KNOCK_NAME=$1
-  SEQUENCE=$2
-  INPUT_INTERFACE=$3
-  OUTPUT_INTERFACE=$4
-  DESTINATION_IP=$5
-  DESTINATION_PORT=$6
-  
-  COMMAND="/usr/sbin/iptables -I FORWARD_PORT_KNOCKING \
-  -i $INPUT_INTERFACE \
-  -o $OUTPUT_INTERFACE \
-  -s %IP% \
-  -d $DESTINATION \
-  --dport $DESTINATION_PORT \
-  -m STATE \
-  --state NEW,ESTABLISHED \
-  -j ACCEPT"
+  install_iptables_addons
 
-  echo "[$KNOCK_NAME]
-    sequence    = $SEQUENCE
+  KNOCK_NAME=$1
+  OPEN_SEQUENCE=$2
+  CLOSE_SEQUENCE=$3
+  INPUT_INTERFACE=$4
+  OUTPUT_INTERFACE=$5
+  DESTINATION_IP=$6
+  DESTINATION_PORT=$7
+  
+  COMMAND="/usr/sbin/accept_forward -I $INPUT_INTERFACE $OUTPUT_INTERFACE %IP% $DESTINATION_IP $DESTINATION_PORT"
+
+  echo "[open_$KNOCK_NAME]
+    sequence    = $OPEN_SEQUENCE
+    seq_timeout = 10
+    tcpflags    = syn
+    command     = $COMMAND" >> /etc/knockd.conf
+    
+  COMMAND="/usr/sbin/delete_forward $INPUT_INTERFACE $OUTPUT_INTERFACE %IP% $DESTINATION_IP $DESTINATION_PORT"
+    
+  echo "[close_$KNOCK_NAME]
+    sequence    = $CLOSE_SEQUENCE
     seq_timeout = 10
     tcpflags    = syn
     command     = $COMMAND" >> /etc/knockd.conf
 }
-[options]
-    logfile = /var/log/knockd.log
-[openSSH]
-    sequence    = 7000,8000,9000
-    seq_timeout = 10
-    tcpflags    = syn
-    command     = /usr/sbin/iptables -I INPUT -s %IP% -j ACCEPT
-[closeSSH]
-    sequence    = 9000,8000,7000
-    seq_timeout = 10
-    tcpflags    = syn
-    command     = /usr/sbin/iptables -D INPUT -s %IP% -j ACCEPT
-    
     
