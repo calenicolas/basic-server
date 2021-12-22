@@ -28,7 +28,7 @@ function add_forward_knock() {
   DESTINATION_IP=$6
   DESTINATION_PORT=$7
   
-  COMMAND="/usr/sbin/accept_forward -I $INPUT_INTERFACE $OUTPUT_INTERFACE %IP% $DESTINATION_IP $DESTINATION_PORT"
+  COMMAND="/usr/sbin/accept_forward $INPUT_INTERFACE $OUTPUT_INTERFACE %IP% $DESTINATION_IP $DESTINATION_PORT"
 
   echo "[open_$KNOCK_NAME]
     sequence    = $OPEN_SEQUENCE
