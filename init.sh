@@ -1,5 +1,8 @@
 #!/bin/bash
 
+SCRIPT=`realpath $0`
+SCRIPT_PATH=`dirname $SCRIPT`
+
 function create_chain() {
   NAME=$1
   
@@ -29,5 +32,5 @@ load_input_filters
 iptables -I FORWARD -j FORWARD_PORT_KNOCKING
 iptables -I INPUT -j INPUT_FILTERS
 
-cp ./port-knocing/pk_accept_forward /usr/local/sbin
-cp ./port-knocing/pk_delete_forward /usr/local/sbin
+cp $SCRIPT_PATH/port-knocing/pk_accept_forward /usr/local/sbin
+cp $SCRIPT_PATH/port-knocing/pk_delete_forward /usr/local/sbin
