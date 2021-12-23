@@ -17,7 +17,6 @@ function load_input_filters() {
 
 apt update
 apt upgrade
-apt install iptables-persistent knockd -y
 
 echo "Ingrese la interfaz donde escucha actualmente el servicio de ssh"
 read SSH_INTERFACE
@@ -39,7 +38,7 @@ SSH_CLIENT=$(echo $SSH_CLIENT | awk '{ print $1}')
 iptables -A INPUT -i $SSH_INTERFACE -p tcp --dport 22 -m state --state NEW,ESTABLISHED -s $SSH_CLIENT -j  ACCEPT
 iptables -A OUTPUT -o $SSH_INTERFACE -p tcp --sport 22 -m state --state ESTABLISHED -d $SSH_CLIENT -j  ACCEPT
 
-iptables-save > /etc/iptables/rules.v4
+apt install iptables-persistent knockd -y
 
 cp $SCRIPT_PATH/port-knocking/pk_accept_forward /usr/local/sbin
 cp $SCRIPT_PATH/port-knocking/pk_delete_forward /usr/local/sbin
