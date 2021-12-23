@@ -8,7 +8,6 @@ function create_chain() {
   
   iptables -N $NAME
   iptables -F $NAME
-  iptables -X $NAME
   iptables -I $NAME -j RETURN
 }
 
