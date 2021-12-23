@@ -40,9 +40,10 @@ iptables -A OUTPUT -o $SSH_INTERFACE -p tcp --sport 22 -m state --state ESTABLIS
 
 apt install iptables-persistent knockd -y
 
+cp $SCRIPT_PATH/port-knocking/lib/knockd_configuration.sh /usr/local/lib
 
-cp $SCRIPT_PATH/port-knocking/knockd_configuration.sh /usr/local/lib
+chmod +x $SCRIPT_PATH/port-knocking/*
 
-cp $SCRIPT_PATH/port-knocking/pk_accept_forwarding /usr/local/sbin
-cp $SCRIPT_PATH/port-knocking/pk_delete_forwarding /usr/local/sbin
-cp $SCRIPT_PATH/port-knocking/pk_protect_forwarding /usr/local/sbin
+cp $SCRIPT_PATH/port-knocking/bin/pk_accept_forwarding /usr/local/sbin
+cp $SCRIPT_PATH/port-knocking/bin/pk_delete_forwarding /usr/local/sbin
+cp $SCRIPT_PATH/port-knocking/bin/pk_protect_forwarding /usr/local/sbin
