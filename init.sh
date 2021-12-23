@@ -29,5 +29,5 @@ load_input_filters
 iptables -I FORWARD -j FORWARD_PORT_KNOCKING
 iptables -I INPUT -j INPUT_FILTERS
 
-cp ./port-knocing/pk_accept_forward /usr/local/bin
-cp ./port-knocing/pk_delete_forward /usr/local/bin
+cp ./port-knocing/pk_accept_forward /usr/local/sbin
+cp ./port-knocing/pk_delete_forward /usr/local/sbin
