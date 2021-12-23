@@ -38,6 +38,7 @@ iptables -I INPUT -j INPUT_FILTERS
 SSH_CLIENT=$(echo $SSH_CLIENT | awk '{ print $1}')
 
 iptables -A INPUT -i $SSH_INTERFACE -p tcp --dport 22 -m state --state NEW,ESTABLISHED -s $SSH_CLIENT -j  ACCEPT
+iptables -A OUTPUT -o $SSH_INTERFACE -p tcp --sport 22 -m state --state ESTABLISHED -d $SSH_CLIENT -j  ACCEPT
 
 iptables-save > /etc/iptables/rules.v4
 
