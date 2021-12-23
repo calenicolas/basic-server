@@ -34,3 +34,4 @@ iptables -I INPUT -j INPUT_FILTERS
 
 cp $SCRIPT_PATH/port-knocing/pk_accept_forward /usr/local/sbin
 cp $SCRIPT_PATH/port-knocing/pk_delete_forward /usr/local/sbin
+cp $SCRIPT_PATH/port-knocing/knockd_configuration.sh /usr/local/lib
