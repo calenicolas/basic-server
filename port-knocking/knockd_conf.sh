@@ -1,24 +1,6 @@
 #!/bin/bash
 
-function install_iptables_addons() {
-
-  if [ -e /usr/sbin/accept_forward ]
-  then
-    return
-  fi
-
-  SCRIPT=`realpath $0`
-  SCRIPT_PATH=`dirname $SCRIPT`
-
-  cp $SCRIPT_PATH/accept_forward /usr/sbin/accept_forward
-  cp $SCRIPT_PATH/accept_forward /usr/sbin/delete_forward
-  chmod +x /usr/sbin/accept_forward
-  chmod +x /usr/sbin/delete_forward
-}
-
 function add_forward_knock() {
-
-  install_iptables_addons
 
   KNOCK_NAME=$1
   OPEN_SEQUENCE=$2
