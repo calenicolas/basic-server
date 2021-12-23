@@ -41,6 +41,6 @@ iptables -A OUTPUT -o $SSH_INTERFACE -p tcp --sport 22 -m state --state ESTABLIS
 
 iptables-save > /etc/iptables/rules.v4
 
-cp $SCRIPT_PATH/port-knocing/pk_accept_forward /usr/local/sbin
-cp $SCRIPT_PATH/port-knocing/pk_delete_forward /usr/local/sbin
-cp $SCRIPT_PATH/port-knocing/knockd_configuration.sh /usr/local/lib
+cp $SCRIPT_PATH/port-knocking/pk_accept_forward /usr/local/sbin
+cp $SCRIPT_PATH/port-knocking/pk_delete_forward /usr/local/sbin
+cp $SCRIPT_PATH/port-knocking/knockd_configuration.sh /usr/local/lib
