@@ -49,7 +49,10 @@ echo "[options]
 
 nano /etc/default/knockd
 
-cp $SCRIPT_PATH/port-knocking/lib/knockd_configuration.sh /usr/local/lib
+mkdir /usr/local/lib/pk
+mkdir /usr/local/sbin/pk
+
+cp $SCRIPT_PATH/port-knocking/lib/knockd_configuration.sh /usr/local/lib/pk
 
 chmod +x $SCRIPT_PATH/port-knocking/bin/*
-cp $SCRIPT_PATH/port-knocking/bin/* /usr/local/sbin
+cp $SCRIPT_PATH/port-knocking/bin/* /usr/local/sbin/pk
