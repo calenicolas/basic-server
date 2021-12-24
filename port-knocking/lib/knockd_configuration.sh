@@ -33,7 +33,7 @@ function add_input_knock() {
   OPEN_SEQUENCE=$2
   CLOSE_SEQUENCE=$3
   INPUT_INTERFACE=$4
-  DESTINATION_PORT=$7
+  DESTINATION_PORT=$5
   
   COMMAND="/usr/local/sbin/accept_forward $INPUT_INTERFACE %IP% $DESTINATION_PORT"
 
