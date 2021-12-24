@@ -10,7 +10,7 @@ function add_forward_knock() {
   DESTINATION_IP=$6
   DESTINATION_PORT=$7
   
-  COMMAND="/usr/sbin/accept_forward $INPUT_INTERFACE $OUTPUT_INTERFACE %IP% $DESTINATION_IP $DESTINATION_PORT"
+  COMMAND="/usr/local/sbin/accept_forward $INPUT_INTERFACE $OUTPUT_INTERFACE %IP% $DESTINATION_IP $DESTINATION_PORT"
 
   echo "[open_$KNOCK_NAME]
     sequence    = $OPEN_SEQUENCE
@@ -18,7 +18,7 @@ function add_forward_knock() {
     tcpflags    = syn
     command     = $COMMAND" >> /etc/knockd.conf
     
-  COMMAND="/usr/sbin/delete_forward $INPUT_INTERFACE $OUTPUT_INTERFACE %IP% $DESTINATION_IP $DESTINATION_PORT"
+  COMMAND="/usr/local/sbin/delete_forward $INPUT_INTERFACE $OUTPUT_INTERFACE %IP% $DESTINATION_IP $DESTINATION_PORT"
     
   echo "[close_$KNOCK_NAME]
     sequence    = $CLOSE_SEQUENCE
@@ -27,3 +27,27 @@ function add_forward_knock() {
     command     = $COMMAND" >> /etc/knockd.conf
 }
     
+function add_input_knock() {
+
+  KNOCK_NAME=$1
+  OPEN_SEQUENCE=$2
+  CLOSE_SEQUENCE=$3
+  INPUT_INTERFACE=$4
+  DESTINATION_PORT=$7
+  
+  COMMAND="/usr/local/sbin/accept_forward $INPUT_INTERFACE %IP% $DESTINATION_PORT"
+
+  echo "[open_$KNOCK_NAME]
+    sequence    = $OPEN_SEQUENCE
+    seq_timeout = 10
+    tcpflags    = syn
+    command     = $COMMAND" >> /etc/knockd.conf
+    
+  COMMAND="/usr/local/sbin/delete_forward $INPUT_INTERFACE %IP% $DESTINATION_PORT"
+    
+  echo "[close_$KNOCK_NAME]
+    sequence    = $CLOSE_SEQUENCE
+    seq_timeout = 10
+    tcpflags    = syn
+    command     = $COMMAND" >> /etc/knockd.conf
+}
