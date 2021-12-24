@@ -42,6 +42,11 @@ iptables -A OUTPUT -o $SSH_INTERFACE -p tcp --sport 22 -m state --state ESTABLIS
 
 iptables-save > /etc/iptables/rules.v4
 
+echo "[options]
+	UseSyslog
+
+" > /etc/knockd.conf
+
 nano /etc/default/knockd
 
 cp $SCRIPT_PATH/port-knocking/lib/knockd_configuration.sh /usr/local/lib
